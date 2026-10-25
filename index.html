@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>吴佳君 · 嵌入式软件 / 物联网终端开发</title>
+<meta name="description" content="吴佳君的个人作品集：智能井盖监测、LoRa 多节点采集、智能喂食器。STM32 / NB-IoT / LoRa / MQTT / 微信小程序。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="吴佳君 · 嵌入式软件 / 物联网终端开发">
+<meta property="og:description" content="三个完整项目：智能井盖监测、LoRa 多节点采集、智能喂食器。">
+<style>
+  :root{
+    --bg:#0b0f14; --panel:#111820; --panel-2:#0e141b;
+    --line:#1f2a36; --text:#dbe4ec; --muted:#8295a8; --dim:#5d6f81;
+    --accent:#2dd4bf; --accent-2:#58a6ff; --warn:#e3b341;
+    --mono:ui-monospace,"Cascadia Code","JetBrains Mono",Consolas,"Courier New",monospace;
+    --sans:"Inter","PingFang SC","Microsoft YaHei",system-ui,-apple-system,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; background:var(--bg); color:var(--text);
+    font-family:var(--sans); font-size:16px; line-height:1.75;
+    -webkit-font-smoothing:antialiased;
+    background-image:radial-gradient(circle at 1px 1px, rgba(255,255,255,.035) 1px, transparent 0);
+    background-size:26px 26px;
+  }
+  a{color:var(--accent); text-decoration:none}
+  a:hover{text-decoration:underline; text-underline-offset:3px}
+  .wrap{max-width:940px; margin:0 auto; padding:0 24px}
+  .topline{height:2px; background:linear-gradient(90deg,var(--accent),var(--accent-2) 45%,transparent)}
+
+  /* ---------- hero ---------- */
+  header{padding:76px 0 44px; border-bottom:1px solid var(--line)}
+  .kicker{
+    font-family:var(--mono); font-size:12.5px; letter-spacing:.18em;
+    text-transform:uppercase; color:var(--accent); margin-bottom:18px;
+  }
+  h1{
+    font-family:var(--mono); font-size:clamp(38px,7vw,62px); line-height:1.05;
+    margin:0 0 14px; letter-spacing:-.02em; font-weight:700;
+  }
+  h1 .en{color:var(--dim); font-size:.42em; letter-spacing:.02em; display:block; margin-top:12px; font-weight:400}
+  .role{font-size:clamp(17px,2.6vw,21px); color:var(--text); margin:0 0 8px}
+  .role b{color:var(--accent); font-weight:600}
+  .lead{color:var(--muted); max-width:640px; margin:0 0 26px; font-size:15.5px}
+
+  .status{
+    display:inline-flex; align-items:center; gap:9px;
+    font-family:var(--mono); font-size:12.5px; color:var(--text);
+    background:rgba(45,212,191,.07); border:1px solid rgba(45,212,191,.28);
+    padding:7px 13px; border-radius:999px; margin-bottom:26px;
+  }
+  .dot{width:7px; height:7px; border-radius:50%; background:var(--accent); box-shadow:0 0 0 0 rgba(45,212,191,.6); animation:pulse 2.4s infinite}
+  @keyframes pulse{
+    0%{box-shadow:0 0 0 0 rgba(45,212,191,.5)}
+    70%{box-shadow:0 0 0 9px rgba(45,212,191,0)}
+    100%{box-shadow:0 0 0 0 rgba(45,212,191,0)}
+  }
+
+  .links{display:flex; flex-wrap:wrap; gap:10px}
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:var(--mono); font-size:13px;
+    padding:10px 16px; border-radius:8px; border:1px solid var(--line);
+    color:var(--text); background:var(--panel-2); transition:.18s;
+  }
+  .btn:hover{border-color:var(--accent); color:var(--accent); text-decoration:none; transform:translateY(-1px)}
+  .btn.primary{background:rgba(45,212,191,.1); border-color:rgba(45,212,191,.4); color:var(--accent)}
+  .btn svg{width:15px; height:15px; flex:none}
+
+  /* ---------- section ---------- */
+  section{padding:56px 0; border-bottom:1px solid var(--line)}
+  .sec-head{display:flex; align-items:baseline; gap:14px; margin-bottom:30px}
+  .sec-num{font-family:var(--mono); font-size:12.5px; color:var(--dim); letter-spacing:.1em}
+  .sec-head h2{font-family:var(--mono); font-size:19px; margin:0; letter-spacing:.02em; font-weight:600}
+  .sec-head .hint{color:var(--dim); font-size:13px; margin-left:auto; font-family:var(--mono)}
+
+  /* ---------- project ---------- */
+  .proj{
+    position:relative; background:var(--panel); border:1px solid var(--line);
+    border-left:3px solid var(--accent); border-radius:12px;
+    padding:26px 26px 22px; margin-bottom:20px; transition:.2s;
+  }
+  .proj:hover{background:#131c26; border-color:#2a3a4c; border-left-color:var(--accent)}
+  .proj-top{display:flex; align-items:flex-start; gap:16px; margin-bottom:10px}
+  .proj-idx{
+    font-family:var(--mono); font-size:13px; color:var(--dim);
+    border:1px solid var(--line); border-radius:6px; padding:2px 8px; margin-top:4px; flex:none;
+  }
+  .proj h3{font-size:19px; margin:0 0 6px; font-weight:600; letter-spacing:.01em}
+  .proj .tag{
+    font-family:var(--mono); font-size:11.5px; color:var(--accent);
+    background:rgba(45,212,191,.08); border:1px solid rgba(45,212,191,.22);
+    padding:2px 8px; border-radius:5px; margin-left:2px;
+  }
+  .proj .meta{font-family:var(--mono); font-size:12.5px; color:var(--dim); margin-bottom:14px}
+  .proj ul{margin:0 0 16px; padding-left:0; list-style:none}
+  .proj li{position:relative; padding-left:18px; margin-bottom:7px; color:#c3cedb; font-size:15px}
+  .proj li::before{content:"›"; position:absolute; left:2px; color:var(--accent); font-weight:700}
+  .stack{display:flex; flex-wrap:wrap; gap:7px; margin-bottom:16px}
+  .pill{
+    font-family:var(--mono); font-size:11.5px; color:var(--muted);
+    background:var(--panel-2); border:1px solid var(--line);
+    padding:3px 9px; border-radius:5px;
+  }
+  .proj-links{display:flex; flex-wrap:wrap; gap:8px}
+  .plink{
+    font-family:var(--mono); font-size:12.5px; color:var(--muted);
+    border:1px solid var(--line); padding:6px 12px; border-radius:7px; transition:.18s;
+  }
+  .plink:hover{border-color:var(--accent-2); color:var(--accent-2); text-decoration:none}
+
+  /* ---------- skills ---------- */
+  .skill-row{display:grid; grid-template-columns:150px 1fr; gap:14px; padding:13px 0; border-bottom:1px dashed rgba(31,42,54,.9)}
+  .skill-row:last-child{border-bottom:0}
+  .skill-key{font-family:var(--mono); font-size:12.5px; color:var(--accent); padding-top:3px}
+  .skill-val{display:flex; flex-wrap:wrap; gap:7px}
+
+  /* ---------- facts ---------- */
+  .facts{display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:14px}
+  .fact{background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:16px 18px}
+  .fact .k{font-family:var(--mono); font-size:11.5px; color:var(--dim); letter-spacing:.08em; margin-bottom:5px}
+  .fact .v{font-size:15px; color:var(--text)}
+  .awards{margin:24px 0 0; padding:0; list-style:none; display:grid; gap:9px}
+  .awards li{position:relative; padding-left:20px; color:#c3cedb; font-size:15px}
+  .awards li::before{content:"◆"; position:absolute; left:0; top:1px; color:var(--accent-2); font-size:11px}
+
+  /* ---------- footer ---------- */
+  footer{padding:46px 0 60px; color:var(--dim)}
+  .foot-grid{display:flex; flex-wrap:wrap; gap:26px; justify-content:space-between; align-items:flex-end}
+  .foot-note{font-family:var(--mono); font-size:12px; line-height:2}
+  .foot-note a{color:var(--muted)}
+  .foot-mark{font-family:var(--mono); font-size:11.5px; color:#3d4d5c; text-align:right}
+
+  @media (max-width:720px){
+    header{padding:52px 0 34px}
+    section{padding:42px 0}
+    .proj{padding:20px 18px}
+    .proj-top{gap:10px}
+    .skill-row{grid-template-columns:1fr; gap:6px}
+    .sec-head .hint{display:none}
+    .foot-grid{flex-direction:column; align-items:flex-start}
+  }
+  @media print{
+    body{background:#fff; color:#111}
+    .proj,.fact{border-color:#ddd; background:#fff}
+    .btn,.plink{border-color:#ccc; color:#111}
+  }
+</style>
+</head>
+<body>
+<div class="topline"></div>
+
+<header>
+  <div class="wrap">
+    <div class="kicker">Portfolio / 2026</div>
+    <h1>吴佳君<span class="en">Wu Jiajun — Embedded Software · IoT Terminal</span></h1>
+    <p class="role">嵌入式软件 · 物联网终端开发 · <b>硬件到云端全链路</b></p>
+    <p class="lead">
+      物联网工程本科，2026 年 6 月毕业，专业排名 3/55（前 10%）。
+      独立完成过 4 个软硬结合项目：从器件选型、焊接调试、驱动移植，到通信协议、云平台与小程序端。
+      习惯用示波器和串口日志定位问题，也愿意把踩过的坑写成文档。
+    </p>
+
+    <div class="status"><span class="dot"></span>可即时到岗 · 优先长沙 / 上海 / 广州 / 深圳，接受异地</div>
+
+    <div class="links">
+      <a class="btn primary" href="assets/resume.pdf" download>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 19h16"/></svg>
+        下载简历 PDF
+      </a>
+      <a class="btn" href="https://github.com/Wacetub" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.4-3.9-1.4-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.7 1.3 3.4 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.8 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.5 11.5 0 016 0C17.9 4.7 19 5 19 5c.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.5-2.7 5.5-5.3 5.8.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.7 18.3.5 12 .5z"/></svg>
+        GitHub
+      </a>
+      <a class="btn" href="mailto:2908240976@qq.com">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+        2908240976@qq.com
+      </a>
+    </div>
+  </div>
+</header>
+
+<!-- ============ 项目 ============ -->
+<section id="work">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-num">01</span>
+      <h2>项目</h2>
+      <span class="hint">3 个完整项目 · 均可查看源码与文档</span>
+    </div>
+
+    <!-- 井盖 -->
+    <article class="proj">
+      <div class="proj-top">
+        <span class="proj-idx">01</span>
+        <div>
+          <h3>智能井盖状态监测系统 <span class="tag">毕业设计 · 校级优秀</span></h3>
+          <div class="meta">STM32F103 · NB-IoT(MN316) · MQTT · OneNET · 微信小程序　|　2025.09 – 2026.05　独立完成</div>
+        </div>
+      </div>
+      <ul>
+        <li>MN316 模组只提供 TCP socket，<b>在 AT 指令之上手工组包 MQTT</b>（CONNECT / PUBLISH / SUBSCRIBE / PINGREQ，含剩余长度变长编码），不依赖模组内置协议栈。</li>
+        <li>GPS 未定位时主动裁剪经纬度字段，避免云端存入 0,0 无效坐标；水位用 5 点分段线性标定 + 10 次 ADC 均值，解决液位传感器非线性跳变。</li>
+        <li>自研三层加权洪涝风险评估：0.50 水位 / 0.30 倾斜 / 0.20 气体，乘天气修正系数后按区域聚合，配 5 条精确匹配的预警规则。</li>
+      </ul>
+      <div class="stack">
+        <span class="pill">C</span><span class="pill">STM32F103</span><span class="pill">I²C / ADC / UART</span>
+        <span class="pill">NB-IoT</span><span class="pill">MQTT</span><span class="pill">OneNET</span><span class="pill">小程序</span>
+      </div>
+      <div class="proj-links">
+        <a class="plink" href="assets/project-manhole.pdf" target="_blank">设计文档 PDF（22 页）</a>
+        <a class="plink" href="https://github.com/Wacetub/SmartManhole" target="_blank" rel="noopener">源码仓库</a>
+      </div>
+    </article>
+
+    <!-- LoRa -->
+    <article class="proj">
+      <div class="proj-top">
+        <span class="proj-idx">02</span>
+        <div>
+          <h3>LoRa 多场景信息采集系统 <span class="tag">技术负责人</span></h3>
+          <div class="meta">一主两从 · SX1278 · RS485 Modbus RTU · 4G 上云　|　2023.10 – 2025.06　5 人团队</div>
+        </div>
+      </div>
+      <ul>
+        <li>定义 10 字节应用层帧：定向传输模式下前 3 字节（高地址 / 低地址 / 信道）被模组解析，对端实收 7 字节，用首字节做节点标识，省掉额外帧头。</li>
+        <li>主从轮询调度：网关按地址交替问询 A/B 节点，500 ms 等待应答；节点侧依次问询三个 Modbus 从站（0x01 氮磷钾 / 0x02 温湿度 / 0x03 pH）。</li>
+        <li>调过两个典型问题：RS485 回帧撞车（问询间隔不足 100 ms 导致总线上电平叠加）、寻址头写错（模组把地址算进用户数据，对端首字节恒为 0）。</li>
+      </ul>
+      <div class="stack">
+        <span class="pill">STM32F103ZET6</span><span class="pill">LoRa / SX1278</span><span class="pill">RS485</span>
+        <span class="pill">Modbus RTU</span><span class="pill">4G DTU</span><span class="pill">OneNET</span>
+      </div>
+      <div class="proj-links">
+        <a class="plink" href="assets/project-lora.pdf" target="_blank">设计文档 PDF（5 页精简版）</a>
+        <a class="plink" href="https://github.com/Wacetub/LoRa-MultiScene-System" target="_blank" rel="noopener">源码仓库</a>
+      </div>
+    </article>
+
+    <!-- 喂食器 -->
+    <article class="proj">
+      <div class="proj-top">
+        <span class="proj-idx">03</span>
+        <div>
+          <h3>基于 STM32 的智能喂食器 <span class="tag">应用端负责人</span></h3>
+          <div class="meta">HX711 · YW01 · DHT11 · OneNET 物模型 · 小程序 4 页 + AI 助手　|　2025.03 – 2025.06　2 人协作</div>
+        </div>
+      </div>
+      <ul>
+        <li>HX711 两步标定：空仓取均值做去皮，再放已知砝码求比例系数；余粮克数与百分比双路展示。</li>
+        <li>小程序 3 s 轮询属性接口，四类阈值判警（温度 / 湿度 / 水位 / 余粮），阈值存本地缓存并在 <code>onShow</code> 重读，保证设置页与控制页判定一致。</li>
+        <li>控制指令<b>双通道降级</b>：属性设置失败自动走服务调用——不同固件支持不一致，只走一条时用户分不清是网络问题还是设备问题。</li>
+      </ul>
+      <div class="stack">
+        <span class="pill">STM32F103ZET6</span><span class="pill">HX711</span><span class="pill">ADC</span>
+        <span class="pill">OneNET 物模型</span><span class="pill">小程序</span><span class="pill">AI 助手</span>
+      </div>
+      <div class="proj-links">
+        <a class="plink" href="assets/project-feeder.pdf" target="_blank">设计文档 PDF（4 页精简版）</a>
+        <a class="plink" href="https://github.com/Wacetub/Smart-Pet-Feeder" target="_blank" rel="noopener">源码仓库</a>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ============ 技能 ============ -->
+<section id="skills">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-num">02</span>
+      <h2>技能</h2>
+      <span class="hint">按熟练度分层，不写“精通”</span>
+    </div>
+
+    <div class="skill-row">
+      <div class="skill-key">语言</div>
+      <div class="skill-val">
+        <span class="pill">C（指针 / 结构体 / 位操作 / 环形缓冲）</span>
+        <span class="pill">C++ 基础</span>
+        <span class="pill">Python 脚本</span>
+        <span class="pill">JavaScript（小程序 / Node）</span>
+      </div>
+    </div>
+    <div class="skill-row">
+      <div class="skill-key">平台与系统</div>
+      <div class="skill-val">
+        <span class="pill">STM32F103（Cortex-M3）</span>
+        <span class="pill">STM32MP157（A7+M4）</span>
+        <span class="pill">FreeRTOS</span>
+        <span class="pill">Linux 常用命令 / 交叉编译</span>
+        <span class="pill">Keil / CubeMX</span>
+      </div>
+    </div>
+    <div class="skill-row">
+      <div class="skill-key">总线与协议</div>
+      <div class="skill-val">
+        <span class="pill">UART</span><span class="pill">I²C</span><span class="pill">SPI</span>
+        <span class="pill">RS485</span><span class="pill">Modbus RTU</span>
+        <span class="pill">MQTT</span><span class="pill">TCP/IP</span><span class="pill">NMEA 0183</span>
+      </div>
+    </div>
+    <div class="skill-row">
+      <div class="skill-key">无线</div>
+      <div class="skill-val">
+        <span class="pill">NB-IoT（AT / CoAP / LwM2M）</span>
+        <span class="pill">LoRa（SX1278）</span>
+        <span class="pill">Wi-Fi（ESP8266 AT）</span>
+        <span class="pill">BLE</span>
+      </div>
+    </div>
+    <div class="skill-row">
+      <div class="skill-key">应用与云</div>
+      <div class="skill-val">
+        <span class="pill">微信小程序</span><span class="pill">Qt 上位机</span>
+        <span class="pill">OneNET</span><span class="pill">阿里云 IoT</span>
+      </div>
+    </div>
+    <div class="skill-row">
+      <div class="skill-key">动手</div>
+      <div class="skill-val">
+        <span class="pill">焊接 / 飞线 / 排故</span><span class="pill">万用表</span>
+        <span class="pill">示波器</span><span class="pill">逻辑分析仪</span><span class="pill">立创 EDA</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 教育与证书 ============ -->
+<section id="about">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-num">03</span>
+      <h2>教育与证书</h2>
+    </div>
+
+    <div class="facts">
+      <div class="fact">
+        <div class="k">EDUCATION</div>
+        <div class="v">榆林大学（原榆林学院）<br>物联网工程 · 本科 · 2022.09 – 2026.06</div>
+      </div>
+      <div class="fact">
+        <div class="k">RANKING</div>
+        <div class="v">专业排名 3/55（前 10%）<br>校级优秀毕业设计</div>
+      </div>
+      <div class="fact">
+        <div class="k">CERTIFICATES</div>
+        <div class="v">嵌入式系统初级开发工程师<br>HarmonyOS 应用高级开发者认证</div>
+      </div>
+    </div>
+
+    <ul class="awards">
+      <li>国家励志奖学金</li>
+      <li>第五届国际青年人工智能大赛 全国总决赛三等奖</li>
+      <li>中国大学生计算机设计大赛 三等奖</li>
+      <li>中国国际大学生创新大赛 省级银奖</li>
+    </ul>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-note">
+        邮箱　<a href="mailto:2908240976@qq.com">2908240976@qq.com</a><br>
+        代码　<a href="https://github.com/Wacetub" target="_blank" rel="noopener">github.com/Wacetub</a><br>
+        简历　<a href="assets/resume.pdf" download>PDF 下载</a>
+      </div>
+      <div class="foot-mark">
+        © 2026 吴佳君<br>
+        Hand-written HTML · no framework
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
